@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { projects } from "@/lib/projects"
 import {
   ArrowUpRight,
   BriefcaseBusiness,
@@ -41,30 +42,6 @@ const navLinks = [
   { href: "#projects", label: "Projects" },
   { href: "#experience", label: "Experience" },
   { href: "#contact", label: "Contact" },
-]
-
-const projects = [
-  {
-    title: "Nova Commerce",
-    description:
-      "A modular storefront with personalized recommendations, conversion-focused landing pages, and analytics dashboards.",
-    tags: ["Next.js", "TypeScript", "Stripe", "PostgreSQL"],
-    link: "#",
-  },
-  {
-    title: "Pulse Board",
-    description:
-      "An internal KPI cockpit for leadership teams with role-based access, real-time sync, and alert workflows.",
-    tags: ["React", "tRPC", "Prisma", "Tailwind"],
-    link: "#",
-  },
-  {
-    title: "Route Pilot",
-    description:
-      "A lightweight logistics planner that optimizes deliveries and visualizes routes with map overlays and events.",
-    tags: ["Next.js", "Maps API", "Redis", "Docker"],
-    link: "#",
-  },
 ]
 
 const experience = [
@@ -172,7 +149,7 @@ export default function Page() {
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
-              <Link href="#projects" className={cn(buttonVariants())}>
+              <Link href="/projects" className={cn(buttonVariants())}>
                 View projects
                 <ArrowUpRight data-icon="inline-end" />
               </Link>
@@ -306,22 +283,28 @@ export default function Page() {
         </section>
 
         <section id="projects" className="flex flex-col gap-4">
-          <div className="flex items-center gap-3">
-            <span className="rounded-md bg-primary/15 p-2 text-primary">
-              <FolderKanban />
-            </span>
-            <h2 className="font-heading text-2xl font-semibold tracking-tight">Featured Projects</h2>
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <span className="rounded-md bg-primary/15 p-2 text-primary">
+                <FolderKanban />
+              </span>
+              <h2 className="font-heading text-2xl font-semibold tracking-tight">Featured Projects</h2>
+            </div>
+            <Link href="/projects" className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "gap-1.5 text-muted-foreground")}>
+              View all
+              <ArrowUpRight className="size-4" />
+            </Link>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {projects.map((project) => (
-              <Card key={project.title} className="group border-border/70 transition hover:-translate-y-1 hover:shadow-lg">
+            {projects.slice(0, 3).map((project) => (
+              <Card key={project.slug} className="group border-border/70 transition hover:-translate-y-1 hover:shadow-lg">
                 <CardHeader>
                   <CardTitle className="font-heading text-xl">{project.title}</CardTitle>
                   <CardDescription>{project.description}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
+                  {project.tags.slice(0, 4).map((tag) => (
                     <Badge key={tag} variant="secondary">
                       {tag}
                     </Badge>
@@ -329,7 +312,7 @@ export default function Page() {
                 </CardContent>
                 <CardFooter>
                   <Link
-                    href={project.link}
+                    href={`/projects/${project.slug}`}
                     className={cn(buttonVariants({ variant: "ghost" }), "px-0 text-primary hover:text-primary")}
                   >
                     Open case study
