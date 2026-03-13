@@ -8,9 +8,9 @@ import { buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
@@ -34,21 +34,22 @@ export function ThemeToggle() {
         Theme
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-44">
-        <DropdownMenuLabel>Appearance</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        {THEMES.map((item) => (
-          <DropdownMenuItem
-            key={item.value}
-            onClick={() => setTheme(item.value)}
-            className="justify-between"
-          >
-            <span className="inline-flex items-center gap-2">
-              <item.icon />
-              {item.label}
-            </span>
-            <Check className={cn(theme === item.value ? "opacity-100" : "opacity-0")} />
-          </DropdownMenuItem>
-        ))}
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>Appearance</DropdownMenuLabel>
+          {THEMES.map((item) => (
+            <DropdownMenuItem
+              key={item.value}
+              onClick={() => setTheme(item.value)}
+              className="justify-between"
+            >
+              <span className="inline-flex items-center gap-2">
+                <item.icon />
+                {item.label}
+              </span>
+              <Check className={cn(theme === item.value ? "opacity-100" : "opacity-0")} />
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   )
